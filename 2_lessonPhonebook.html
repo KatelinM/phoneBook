@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Phonebook</title>
+    <link rel="icon" type="image/png" href="http://o90007de.beget.tech/favicon.png" sizes="32x32">
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+	  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	<link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/contactList.css">
+
+  </head>
+<body>
+
+    <div class="container" id="program" >
+       <h1>Component1</h1>
+
+    </div>
+    <script type="text/babel">
+      var CONTACTS =[
+        {
+          id:1,
+          name:"Alex",
+          phoneNumber:"+79926543312",
+          image:"https://c.pxhere.com/photos/7f/af/photo-13412.jpg!d"
+        }, {
+          id:2,
+          name:"Rey",
+          phoneNumber:"+74635452",
+          image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUB1hUAFz_tFW-b-pjZTyJ7JivgzFchailGvnAZdBEOgzKkHd8"
+        }, {
+          id:3,
+          name:"Elisa",
+          phoneNumber:"+3445453",
+          image:"http://photos-models.com/wp-content/uploads/2017/05/Lola-Chuil-photo.jpg"
+        },  {
+          id:4,
+          name:"Clark",
+          phoneNumber:"+22534324",
+          image:"https://www.fresher.ru/manager_content/images2/samye-vysokooplachivaemye-modeli-muzhchiny-2013/6.jpg"
+        },  {
+          id:5,
+          name:"Leo",
+          phoneNumber:"+17765645",
+          image:" https://i.imgur.com/F73yQxZ.gif"
+        },  {
+          id:6,
+          name:"Anna",
+          phoneNumber:"+56365334324",
+          image:" https://vignette.wikia.nocookie.net/ofibty/images/1/1a/Cute-girl.gif/revision/latest?cb=20130609222039"
+        },  {
+          id:7,
+          name:"Scarlett",
+          phoneNumber:"+65734324",
+          image:" https://st.kp.yandex.net/images/actor_iphone/iphone360_3903.jpg"
+        }
+
+
+
+      ];
+
+class Contact extends React.Component{
+       render() {
+              return   <li className="contact">
+                            <img className="contact-image" src={this.props.image} width="60px" height="60px"/>
+                            <div className="contact-info">
+                              <div className="contact-name">{this.props.name}</div>
+                              <div className="contact-number">{this.props.phoneNumber}</div>
+                            </div>
+                      </li>
+
+           }
+};
+class ContactList extends React.Component{
+         constructor(props) {
+            super(props);
+            this.state = {
+              data:CONTACTS
+            }
+          }
+
+        handleSearch(event){
+          var handleSearch=event.target.value.toLowerCase();
+          var newContact=CONTACTS.filter(function(el){
+            var searchValue=el.name.toLowerCase();
+            return searchValue.indexOf(handleSearch)!==-1;
+          });
+          this.setState({
+               data: newContact
+           });
+
+        }
+
+        render() {
+               return <div className="contacts">
+               <input type="text" className="search-field" placeholder="Search..." onChange={this.handleSearch.bind(this)} />
+                 <ul className="contacts-list">
+                  {
+                    this.state.data.map(function(el){
+                      return   <Contact key={el.id}
+                                        name={el.name}
+                                        phoneNumber={el.phoneNumber}
+                                        image={el.image}
+                      />;
+                    })
+                  }
+                 </ul>
+               </div>;
+            }
+};
+
+      ReactDOM.render(
+        <div>
+          <ContactList />
+        </div>,
+        document.getElementById("program")
+      );
+
+    </script>
+    </div>
+</body>
+</html>
